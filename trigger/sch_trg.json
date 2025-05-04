@@ -1,6 +1,7 @@
 {
 	"name": "sch_trg",
 	"properties": {
+		"description": "trg every 1hr ",
 		"annotations": [],
 		"runtimeState": "Started",
 		"pipelines": [
@@ -8,6 +9,25 @@
 				"pipelineReference": {
 					"referenceName": "copy_pipeline",
 					"type": "PipelineReference"
+				},
+				"parameters": {
+					"p_file_name": [
+						{
+							"f_name": "AdventureWorks_Products.csv"
+						},
+						{
+							"f_name": "AdventureWorks_Returns.csv"
+						},
+						{
+							"f_name": "AdventureWorks_Sales_2016.csv"
+						},
+						{
+							"f_name": "AdventureWorks_Sales_2017.csv"
+						},
+						{
+							"f_name": "AdventureWorks_Territories.csv"
+						}
+					]
 				}
 			}
 		],
