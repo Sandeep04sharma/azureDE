@@ -3,64 +3,113 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "copy_data_rest_api",
-				"description": "Copy data from the github repo",
-				"type": "Copy",
+				"name": "ForEachFile",
+				"type": "ForEach",
 				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 1,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "HttpReadSettings",
-							"requestMethod": "GET"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+					"items": {
+						"value": "@pipeline().parameters.p_file_name",
+						"type": "Expression"
 					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+					"activities": [
+						{
+							"name": "copy_data_rest_api",
+							"description": "Copy data from the github repo",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 1,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "HttpReadSettings",
+										"requestMethod": "GET"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "ds_raw_data",
+									"type": "DatasetReference",
+									"parameters": {
+										"p_filename": {
+											"value": "@item().f_name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_destination",
+									"type": "DatasetReference",
+									"parameters": {
+										"p_folder": "github",
+										"p_filename": {
+											"value": "@item().f_name",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"p_file_name": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"f_name": "AdventureWorks_Products.csv"
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
 					{
-						"referenceName": "ds_raw_data",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
+						"f_name": "AdventureWorks_Returns.csv"
+					},
 					{
-						"referenceName": "ds_destination",
-						"type": "DatasetReference"
+						"f_name": "AdventureWorks_Sales_2016.csv"
+					},
+					{
+						"f_name": "AdventureWorks_Sales_2017.csv"
+					},
+					{
+						"f_name": "AdventureWorks_Territories.csv"
 					}
 				]
 			}
-		],
+		},
 		"annotations": []
 	}
 }
