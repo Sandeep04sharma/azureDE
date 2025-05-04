@@ -1,0 +1,86 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "azure-de-dev"
+		},
+		"ls_adls_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_adls'"
+		},
+		"github_ls_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/"
+		},
+		"ls_adls_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://sandystorage130499.dfs.core.windows.net/"
+		},
+		"sch_trg_properties_copy_pipeline_parameters_p_file_name": {
+			"type": "array",
+			"defaultValue": [
+				{
+					"f_name": "AdventureWorks_Products.csv"
+				},
+				{
+					"f_name": "AdventureWorks_Returns.csv"
+				},
+				{
+					"f_name": "AdventureWorks_Sales_2016.csv"
+				},
+				{
+					"f_name": "AdventureWorks_Sales_2017.csv"
+				},
+				{
+					"f_name": "AdventureWorks_Territories.csv"
+				}
+			]
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "azure-de-dev_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ls_adls_accountKey": {
+						"value": "[parameters('ls_adls_accountKey')]"
+					},
+					"github_ls_properties_typeProperties_url": {
+						"value": "[parameters('github_ls_properties_typeProperties_url')]"
+					},
+					"ls_adls_properties_typeProperties_url": {
+						"value": "[parameters('ls_adls_properties_typeProperties_url')]"
+					},
+					"sch_trg_properties_copy_pipeline_parameters_p_file_name": {
+						"value": "[parameters('sch_trg_properties_copy_pipeline_parameters_p_file_name')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

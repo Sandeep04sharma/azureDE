@@ -1,0 +1,43 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "azure-de-dev"
+		},
+		"ls_adls_accountKey": {
+			"value": ""
+		},
+		"github_ls_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/"
+		},
+		"ls_adls_properties_typeProperties_url": {
+			"value": "https://sandystorage130499.dfs.core.windows.net/"
+		},
+		"sch_trg_properties_copy_pipeline_parameters_p_file_name": {
+			"value": [
+				{
+					"f_name": "AdventureWorks_Products.csv"
+				},
+				{
+					"f_name": "AdventureWorks_Returns.csv"
+				},
+				{
+					"f_name": "AdventureWorks_Sales_2016.csv"
+				},
+				{
+					"f_name": "AdventureWorks_Sales_2017.csv"
+				},
+				{
+					"f_name": "AdventureWorks_Territories.csv"
+				}
+			]
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
