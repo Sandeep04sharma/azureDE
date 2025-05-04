@@ -1,0 +1,45 @@
+{
+	"name": "sch_trg",
+	"properties": {
+		"description": "trg every 1hr ",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "copy_pipeline",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"p_file_name": [
+						{
+							"f_name": "AdventureWorks_Products.csv"
+						},
+						{
+							"f_name": "AdventureWorks_Returns.csv"
+						},
+						{
+							"f_name": "AdventureWorks_Sales_2016.csv"
+						},
+						{
+							"f_name": "AdventureWorks_Sales_2017.csv"
+						},
+						{
+							"f_name": "AdventureWorks_Territories.csv"
+						}
+					]
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 1,
+				"startTime": "2025-05-05T20:05:00",
+				"endTime": "2025-05-05T00:00:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
