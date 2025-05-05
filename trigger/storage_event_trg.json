@@ -1,0 +1,24 @@
+{
+	"name": "storage_event_trg",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "incremental_load",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/source/blobs/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/f9162934-55d7-40f8-96db-55018fc1a25f/resourceGroups/rg_azureDE/providers/Microsoft.Storage/storageAccounts/sandystorage130499",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
