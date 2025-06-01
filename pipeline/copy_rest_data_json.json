@@ -1,0 +1,146 @@
+{
+	"name": "copy_rest_data_json",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_rest_data_json",
+				"description": "fetch json data from rest api using REST as source",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['ISBN:0201558025']['bib_key']"
+								},
+								"sink": {
+									"name": "ISBN:0201558025_bib_key"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ISBN:0201558025']['info_url']"
+								},
+								"sink": {
+									"name": "ISBN:0201558025_info_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ISBN:0201558025']['preview']"
+								},
+								"sink": {
+									"name": "ISBN:0201558025_preview"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ISBN:0201558025']['preview_url']"
+								},
+								"sink": {
+									"name": "ISBN:0201558025_preview_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ISBN:0201558025']['thumbnail_url']"
+								},
+								"sink": {
+									"name": "ISBN:0201558025_thumbnail_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['LCCN:93005405']['bib_key']"
+								},
+								"sink": {
+									"name": "LCCN:93005405_bib_key"
+								}
+							},
+							{
+								"source": {
+									"path": "$['LCCN:93005405']['info_url']"
+								},
+								"sink": {
+									"name": "LCCN:93005405_info_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['LCCN:93005405']['preview']"
+								},
+								"sink": {
+									"name": "LCCN:93005405_preview"
+								}
+							},
+							{
+								"source": {
+									"path": "$['LCCN:93005405']['preview_url']"
+								},
+								"sink": {
+									"name": "LCCN:93005405_preview_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['LCCN:93005405']['thumbnail_url']"
+								},
+								"sink": {
+									"name": "LCCN:93005405_thumbnail_url"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_rest_api",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_destination",
+						"type": "DatasetReference",
+						"parameters": {
+							"p_folder": "REST",
+							"p_filename": "book.json"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
